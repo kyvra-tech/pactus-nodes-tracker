@@ -1,0 +1,342 @@
+[
+    {
+      "name": "Node-1",
+      "status": [
+        {
+          "id": 1,
+          "color": 1
+        },
+        {
+          "id": 2,
+          "color": 2
+        },
+        {
+          "id": 3,
+          "color": 0
+        },
+        {
+          "id": 4,
+          "color": 1
+        },
+        {
+          "id": 5,
+          "color": 2
+        },
+        {
+          "id": 6,
+          "color": 0
+        },
+        {
+          "id": 7,
+          "color": 1
+        }
+      ],
+      "overallScore": 10
+    },
+    {
+      "name": "Node-2",
+      "status": [
+        {
+          "id": 1,
+          "color": 1
+        },
+        {
+          "id": 2,
+          "color": 2
+        },
+        {
+          "id": 3,
+          "color": 0
+        },
+        {
+          "id": 4,
+          "color": 1
+        },
+        {
+          "id": 5,
+          "color": 2
+        },
+        {
+          "id": 6,
+          "color": 0
+        },
+        {
+          "id": 7,
+          "color": 1
+        }
+      ],
+      "overallScore": 20
+    },
+    {
+      "name": "Node-3",
+      "status": [
+        {
+          "id": 1,
+          "color": 1
+        },
+        {
+          "id": 2,
+          "color": 2
+        },
+        {
+          "id": 3,
+          "color": 0
+        },
+        {
+          "id": 4,
+          "color": 1
+        },
+        {
+          "id": 5,
+          "color": 2
+        },
+        {
+          "id": 6,
+          "color": 0
+        },
+        {
+          "id": 7,
+          "color": 1
+        }
+      ],
+      "overallScore": 30
+    },
+    {
+      "name": "Node-4",
+      "status": [
+        {
+          "id": 1,
+          "color": 1
+        },
+        {
+          "id": 2,
+          "color": 2
+        },
+        {
+          "id": 3,
+          "color": 0
+        },
+        {
+          "id": 4,
+          "color": 1
+        },
+        {
+          "id": 5,
+          "color": 2
+        },
+        {
+          "id": 6,
+          "color": 0
+        },
+        {
+          "id": 7,
+          "color": 1
+        }
+      ],
+      "overallScore": 40
+    },
+    {
+      "name": "Node-5",
+      "status": [
+        {
+          "id": 1,
+          "color": 1
+        },
+        {
+          "id": 2,
+          "color": 2
+        },
+        {
+          "id": 3,
+          "color": 0
+        },
+        {
+          "id": 4,
+          "color": 1
+        },
+        {
+          "id": 5,
+          "color": 2
+        },
+        {
+          "id": 6,
+          "color": 0
+        },
+        {
+          "id": 7,
+          "color": 1
+        }
+      ],
+      "overallScore": 50
+    },
+    {
+      "name": "Node-6",
+      "status": [
+        {
+          "id": 1,
+          "color": 1
+        },
+        {
+          "id": 2,
+          "color": 2
+        },
+        {
+          "id": 3,
+          "color": 0
+        },
+        {
+          "id": 4,
+          "color": 1
+        },
+        {
+          "id": 5,
+          "color": 2
+        },
+        {
+          "id": 6,
+          "color": 0
+        },
+        {
+          "id": 7,
+          "color": 1
+        }
+      ],
+      "overallScore": 60
+    },
+    {
+      "name": "Node-7",
+      "status": [
+        {
+          "id": 1,
+          "color": 1
+        },
+        {
+          "id": 2,
+          "color": 2
+        },
+        {
+          "id": 3,
+          "color": 0
+        },
+        {
+          "id": 4,
+          "color": 1
+        },
+        {
+          "id": 5,
+          "color": 2
+        },
+        {
+          "id": 6,
+          "color": 0
+        },
+        {
+          "id": 7,
+          "color": 1
+        }
+      ],
+      "overallScore": 70
+    },
+    {
+      "name": "Node-8",
+      "status": [
+        {
+          "id": 1,
+          "color": 1
+        },
+        {
+          "id": 2,
+          "color": 2
+        },
+        {
+          "id": 3,
+          "color": 0
+        },
+        {
+          "id": 4,
+          "color": 1
+        },
+        {
+          "id": 5,
+          "color": 2
+        },
+        {
+          "id": 6,
+          "color": 0
+        },
+        {
+          "id": 7,
+          "color": 1
+        }
+      ],
+      "overallScore": 80
+    },
+    {
+      "name": "Node-9",
+      "status": [
+        {
+          "id": 1,
+          "color": 1
+        },
+        {
+          "id": 2,
+          "color": 2
+        },
+        {
+          "id": 3,
+          "color": 0
+        },
+        {
+          "id": 4,
+          "color": 1
+        },
+        {
+          "id": 5,
+          "color": 2
+        },
+        {
+          "id": 6,
+          "color": 0
+        },
+        {
+          "id": 7,
+          "color": 1
+        }
+      ],
+      "overallScore": 90
+    },
+    {
+      "name": "Node-10",
+      "status": [
+        {
+          "id": 1,
+          "color": 1
+        },
+        {
+          "id": 2,
+          "color": 2
+        },
+        {
+          "id": 3,
+          "color": 0
+        },
+        {
+          "id": 4,
+          "color": 1
+        },
+        {
+          "id": 5,
+          "color": 2
+        },
+        {
+          "id": 6,
+          "color": 0
+        },
+        {
+          "id": 7,
+          "color": 1
+        }
+      ],
+      "overallScore": 100
+    }
+  ]

@@ -1,0 +1,17 @@
+[
+  {
+    "country": "Tanzania",
+    "coordinates": [-6.369, 34.8888],
+    "status": "Unhealthy"
+  },
+  {
+    "country": "Germany",
+    "coordinates": [51.1657, 10.4515],
+    "status": "Healthy"
+  },
+  {
+    "country": "USA",
+    "coordinates": [37.0902, -95.7129],
+    "status": "Healthy"
+  }
+]
