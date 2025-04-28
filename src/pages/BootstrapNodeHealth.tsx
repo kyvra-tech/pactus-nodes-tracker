@@ -55,11 +55,11 @@ const BootstrapNodeHealth: React.FC = () => {
                 <span className="text-sm text-green-400 w-[60px] font-semibold">
                   {node.overallScore.toFixed(3)}%
                 </span>
-                <div className="flex gap-[2px] overflow-hidden">
+                <div className="flex gap-[1px] overflow-hidden">
                   {node.status.map((stat, i) => (
                     <div
                       key={i}
-                      className={`w-[4px] h-[16px] rounded-xs ${getStatusColor(
+                      className={`w-[24px] h-[26px] rounded-xs ${getStatusColor(
                         stat.color
                       )}`}
                     />

@@ -6,6 +6,7 @@ import Container from "../components/shared/Container";
 import Title from "../components/shared/Title";
 import Paragraph from "../components/shared/Paragraph";
 import peerNodes from "../data/peer_nodes.json";
+import Stats from "../components/sections/Stats";
 
 // CUSTOM MARKER ICON
 const nodeIcon = new L.Icon({
@@ -27,6 +28,7 @@ const PeerNodesMap: React.FC = () => {
             active Pactus peer nodes around the world. Each marker represents a
             node's location and operational state.
           </Paragraph>
+          <Stats />
         </div>
 
         <div className="rounded-lg shadow-lg overflow-hidden border border-gray-300 dark:border-gray-700">
@@ -38,7 +40,7 @@ const PeerNodesMap: React.FC = () => {
           >
             <TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a>'
-              url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+              url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
             />
 
             {peerNodes.map((node, index) => (
