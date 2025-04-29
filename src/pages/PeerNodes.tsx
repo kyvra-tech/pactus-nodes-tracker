@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
@@ -16,10 +16,41 @@ const nodeIcon = new L.Icon({
 });
 
 const PeerNodesMap: React.FC = () => {
+  // START CHANGE THEME ON LOAD
+  const [theme, setTheme] = useState<"light" | "dark">("light");
+
+  useEffect(() => {
+    const updateTheme = () => {
+      if (document.documentElement.classList.contains("dark")) {
+        setTheme("dark");
+      } else {
+        setTheme("light");
+      }
+    };
+
+    updateTheme(); // SET INITIAL THEME
+
+    const observer = new MutationObserver(updateTheme);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+  // END CHANGE THEME ON LOAD
+
+  const tileLayerUrl =
+    theme === "dark"
+      ? "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+      : "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png";
+
   return (
     <section className="mt-16 min-h-screen">
       <Container>
-        <div className="max-w-6xl text-left space-y-3 mb-8">
+        <div className="max-w-6xl text-left space-y-3 mb-6">
           <Title style="font-bold text-gray-800 dark:text-white text-2xl">
             Global Peer Node Visibility
           </Title>
@@ -28,6 +59,9 @@ const PeerNodesMap: React.FC = () => {
             active Pactus peer nodes around the world. Each marker represents a
             node's location and operational state.
           </Paragraph>
+        </div>
+
+        <div className="mb-6">
           <Stats />
         </div>
 
@@ -40,7 +74,7 @@ const PeerNodesMap: React.FC = () => {
           >
             <TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a>'
-              url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+              url={tileLayerUrl}
             />
 
             {peerNodes.map((node, index) => (

@@ -48,18 +48,18 @@ const BootstrapNodeHealth: React.FC = () => {
           {nodes.map((node, idx) => (
             <div
               key={idx}
-              className="flex justify-between items-center px-5 py-3 bg-gray-800 rounded-md border border-gray-700"
+              className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 px-5 py-4 bg-gray-800 rounded-md border border-gray-700"
             >
-              {/* LEFT: UPTIME & STATUS BARS */}
-              <div className="flex items-center gap-4">
-                <span className="text-sm text-green-400 w-[60px] font-semibold">
-                  {node.overallScore.toFixed(3)}%
+              {/* LEFT: NODE NAME & STATUS BARS */}
+              <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 w-full">
+                <span className="text-sm text-gray-300 font-semibold truncate max-w-full sm:max-w-[150px]">
+                  {node.name}
                 </span>
-                <div className="flex gap-[1px] overflow-hidden">
+                <div className="flex w-full max-w-full sm:max-w-[1000px] gap-[1px]">
                   {node.status.map((stat, i) => (
                     <div
                       key={i}
-                      className={`w-[24px] h-[26px] rounded-xs ${getStatusColor(
+                      className={`flex-1 h-[36px] rounded-xs ${getStatusColor(
                         stat.color
                       )}`}
                     />
@@ -67,10 +67,10 @@ const BootstrapNodeHealth: React.FC = () => {
                 </div>
               </div>
 
-              {/* RIGHT: NODE NAME AND STATUS */}
-              <div className="flex items-center gap-3">
-                <span className="text-sm text-gray-300 truncate max-w-[150px]">
-                  {node.name}
+              {/* RIGHT: OVERALL SCORE AND STATUS */}
+              <div className="flex items-center justify-between sm:justify-end gap-3">
+                <span className="text-sm text-gray-300 text-right max-w-full sm:max-w-[150px]">
+                  {node.overallScore.toFixed(2)}%
                 </span>
                 <div className="flex items-center gap-1">
                   <div className="w-3 h-3 rounded-full bg-green-500 shadow-md" />
