@@ -4,15 +4,6 @@ Welcome to the **Pactus Node Tracker** — a web-based interface to visualize an
 
 ---
 
-## Technologies Used
-
-- **React** and **TypeScript** for application structure.
-- **Tailwind CSS** for UI styling.
-- **Leaflet** and **React Leaflet** for interactive mapping.
-- **Mock JSON data** and API-ready structure for live integration.
-
----
-
 ## Run Locally
 
 1. Clone the repository and navigate to the directory.
