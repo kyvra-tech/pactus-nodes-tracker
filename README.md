@@ -4,24 +4,6 @@ Welcome to the **Pactus Node Tracker** — a web-based interface to visualize an
 
 ---
 
-## Features
-
-- **Bootstrap Node Health**:
-
-  - Displays the connectivity status of bootstrap nodes over time.
-  - Uses color-coded status bars for daily health visualization.
-
-- **Peer Nodes Map**:
-
-  - Interactive world map showing reachable peer nodes by location.
-  - Real-time visualization of node status and geographical distribution.
-
-- **User Interface**:
-  - Clean and modern layout built with Tailwind CSS.
-  - Light and dark theme support.
-
----
-
 ## Technologies Used
 
 - **React** and **TypeScript** for application structure.
