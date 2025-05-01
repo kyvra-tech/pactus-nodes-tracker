@@ -18,7 +18,7 @@ const ThemeToggle: React.FC<Props> = ({ isDarkmode, toggleTheme }) => {
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          className="w-7 h-7 dark:flex hidden"
+          className="w-6 h-6 dark:flex hidden"
         >
           <path
             stroke-linecap="round"
@@ -33,7 +33,7 @@ const ThemeToggle: React.FC<Props> = ({ isDarkmode, toggleTheme }) => {
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          className="w-7 h-7 dark:hidden"
+          className="w-6 h-6 dark:hidden"
         >
           <path
             stroke-linecap="round"

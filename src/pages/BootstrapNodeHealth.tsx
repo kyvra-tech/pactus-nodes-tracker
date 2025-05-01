@@ -7,6 +7,7 @@ import bootstrapNodes from "../data/bootstrap_nodes.json";
 interface StatusItem {
   id: number;
   color: number; // 0 = red, 1 = yellow, 2 = green
+  date?: string;
 }
 
 interface Node {
@@ -52,13 +53,14 @@ const BootstrapNodeHealth: React.FC = () => {
             >
               {/* LEFT: NODE NAME & STATUS BARS */}
               <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 w-full">
-                <span className="text-sm text-gray-300 font-semibold truncate max-w-full sm:max-w-[150px]">
+                <span className="text-sm text-gray-300 font-semibold truncate max-w-full sm:max-w-[200px]">
                   {node.name}
                 </span>
                 <div className="flex w-full max-w-full sm:max-w-[1000px] gap-[1px]">
                   {node.status.map((stat, i) => (
                     <div
                       key={i}
+                      title={stat.date ? `Date: ${stat.date}` : "No date"}
                       className={`flex-1 h-[36px] rounded-xs ${getStatusColor(
                         stat.color
                       )}`}

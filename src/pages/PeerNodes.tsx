@@ -65,7 +65,7 @@ const PeerNodesMap: React.FC = () => {
           <Stats />
         </div>
 
-        <div className="rounded-lg shadow-lg overflow-hidden border border-gray-300 dark:border-gray-700">
+        <div className="relative z-0 rounded-lg shadow-lg overflow-hidden border border-gray-300 dark:border-gray-700">
           <MapContainer
             center={[20, 0]}
             zoom={2}

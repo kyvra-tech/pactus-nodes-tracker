@@ -1,19 +1,22 @@
-import "./NavItem.css";
 import { Link } from "react-router-dom";
 
 interface Props {
   href: string;
   text: string;
-  style?: string;
-  setActiveItem: () => void;
+  isActive?: boolean;
+  onClick?: () => void;
 }
 
-const NavItem: React.FC<Props> = ({ href, text, style, setActiveItem }) => {
+const NavItem: React.FC<Props> = ({ href, text, isActive, onClick }) => {
   return (
     <Link
       to={href}
-      className={`duration-300 font-medium ease-linear hover:text-primary py-3 ${style}`}
-      onClick={setActiveItem}
+      onClick={onClick}
+      className={`py-2 transition-colors duration-200 ${
+        isActive
+          ? "text-blue-600 dark:text-blue-400 font-semibold"
+          : "text-gray-700 dark:text-gray-300 hover:text-blue-500"
+      }`}
     >
       {text}
     </Link>
