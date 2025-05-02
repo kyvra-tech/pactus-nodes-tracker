@@ -19,9 +19,8 @@ interface Node {
 const getStatusColor = (code: number): string => {
   switch (code) {
     case 0:
-      return "bg-red-600";
+      return "bg-gray-500";
     case 1:
-      return "bg-yellow-400";
     case 2:
       return "bg-green-500";
     default:
@@ -41,7 +40,7 @@ const BootstrapNodeHealth: React.FC = () => {
             Bootstrap Node Health
           </Title>
           <Paragraph className="text-gray-600 dark:text-gray-300 mt-2">
-            Visual representation of node health & daily connectivity status.
+            Visual representation of bootstrap node health.
           </Paragraph>
         </div>
 
