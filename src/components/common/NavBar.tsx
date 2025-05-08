@@ -8,6 +8,8 @@ import ThemeToggle from "../shared/ThemeToggle";
 const navItems = [
   { href: "/", text: "Peer Nodes" },
   { href: "/bootstrap-node", text: "Bootstrap Nodes" },
+  { href: "/grpc", text: "GRPC" },
+  { href: "/json-rpc", text: "JSON RPC" },
 ];
 
 const NavBar: React.FC = () => {
@@ -42,7 +44,7 @@ const NavBar: React.FC = () => {
           {/* End Logo */}
 
           {/* Desktop Nav */}
-          <ul className="hidden lg:flex items-center space-x-8 text-lg font-medium">
+          <ul className="hidden lg:flex items-center space-x-8 text-md font-bold">
             {navItems.map((item) => (
               <NavItem
                 key={item.href}

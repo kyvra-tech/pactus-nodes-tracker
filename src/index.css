@@ -1,37 +1,35 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
 :root {
-        font-family: "Roboto", sans-serif;
-      --color-bg: 255 255 255;
-      --color-border: 255 255 255;
-      --color-box: 255 255 255;
-      --box-border: 229 231 235;
-      --box-sd: 226 232 240 / 0.5;
-      --heading-1: 23 37 84;
-      --heading-2: 31 41 55;
-      --heading-3: 55 65 81;
-  }
-  
-  .dark {
-      --color-bg: 3 7 18;
-      --color-box: 17 24 39;
-      --box-border: 243 244 246/0.1;
-      --box-sd: transparent;
+  --color-bg: 255 255 255;
+  --color-border: 255 255 255;
+  --color-box: 255 255 255;
+  --box-border: 229 231 235;
+  --box-sd: 226 232 240 / 0.5;
+  --heading-1: 23 37 84;
+  --heading-2: 31 41 55;
+  --heading-3: 55 65 81;
+}
 
-      --heading-1: 255 255 255;
-      --heading-2: 243 244 246;
-      --heading-3: 209 213 219;
-  }
+.dark {
+  --color-bg: 3 7 18;
+  --color-box: 17 24 39;
+  --box-border: 243 244 246/0.1;
+  --box-sd: transparent;
 
-  html {
-      scroll-behavior: smooth;
-  }
+  --heading-1: 255 255 255;
+  --heading-2: 243 244 246;
+  --heading-3: 209 213 219;
+}
 
-  body {
-     font-family: "Poppins", sans-serif;
-  }
+html {
+  scroll-behavior: smooth;
+}
 
+body {
+  font-family: sans-serif, Arial, Helvetica, sans-serif;
+}

@@ -2,6 +2,7 @@ import React from "react";
 import Container from "../components/shared/Container";
 import Title from "../components/shared/Title";
 import Paragraph from "../components/shared/Paragraph";
+import NodeInputForm from "../components/shared/NodeInputForm";
 import bootstrapNodes from "../data/bootstrap_nodes.json";
 
 interface StatusItem {
@@ -27,7 +28,7 @@ const getStatusColor = (code: number): string => {
   }
 };
 
-const BootstrapNodeHealth: React.FC = () => {
+const GRPC: React.FC = () => {
   const nodes: Node[] = bootstrapNodes;
 
   return (
@@ -36,11 +37,19 @@ const BootstrapNodeHealth: React.FC = () => {
       <Container>
         <div className="text-left max-w-7xl mx-auto mb-6">
           <Title style="font-bold text-gray-800 dark:text-white text-2xl">
-            Bootstrap Node Health
+            GRPC Health Status
           </Title>
           <Paragraph className="text-gray-600 dark:text-gray-300 mt-2">
-            Visual representation of bootstrap node health.
+            Visual representation of grpc health status.
           </Paragraph>
+        </div>
+
+        <div className="my-6">
+          <NodeInputForm
+            onSubmit={(data) => {
+              console.log("Submitted GRPC node: ", data);
+            }}
+          />
         </div>
 
         <div className="space-y-1">
@@ -90,4 +99,4 @@ const BootstrapNodeHealth: React.FC = () => {
   );
 };
 
-export default BootstrapNodeHealth;
+export default GRPC;
