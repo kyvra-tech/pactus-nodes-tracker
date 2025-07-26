@@ -5,8 +5,16 @@ import "leaflet/dist/leaflet.css";
 import Container from "../components/shared/Container";
 import Title from "../components/shared/Title";
 import Paragraph from "../components/shared/Paragraph";
-import peerNodes from "../data/peer_nodes.json";
+//import peerNodes from "../data/peer_nodes.json";
 import Stats from "../components/sections/Stats";
+
+type PeerNode = {
+  name: string;
+  country: string;
+  city: string;
+  coordinates: [number, number];
+  online_score: number;
+};
 
 // CUSTOM MARKER ICON
 const nodeIcon = new L.Icon({
@@ -14,6 +22,8 @@ const nodeIcon = new L.Icon({
   iconSize: [30, 45],
   iconAnchor: [15, 45],
 });
+
+const API_URL = "http://127.0.0.1:4622/api/v1/peers";
 
 const PeerNodesMap: React.FC = () => {
   // START CHANGE THEME ON LOAD
@@ -47,6 +57,31 @@ const PeerNodesMap: React.FC = () => {
       ? "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
       : "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png";
 
+  const [nodes, setNodes] = useState<PeerNode[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  useEffect(() => {
+    fetch(API_URL)
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to fetch bootstrap nodes");
+        return res.json();
+      })
+      .then((data) => {
+        console.log("API response:", data); // Add this line
+        // If data is { data: [...] }, use setNodes(data.data)
+        // If data is [...], use setNodes(data)
+        setNodes(Array.isArray(data) ? data : data.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
+
   return (
     <section className="mt-16 min-h-screen">
       <Container>
@@ -77,17 +112,42 @@ const PeerNodesMap: React.FC = () => {
               url={tileLayerUrl}
             />
 
-            {peerNodes.map((node, index) => (
+            {nodes.map((node, index) => (
               <Marker
                 key={index}
                 position={node.coordinates as [number, number]}
                 icon={nodeIcon}
               >
                 <Popup className="text-sm">
-                  <div className="font-semibold text-blue-600">
-                    {node.country}
+                  <div className="text-gray-800 font-semibold">
+                    {"Node Name: "}
+                    <span className="text-gray-500font-semibold text-blue-600">
+                      {node.name}
+                    </span>
                   </div>
-                  <div>Status: {node.status}</div>
+                  <div className="text-gray-800 font-semibold">
+                    {"Country: "}
+                    <span className="text-gray-500font-semibold text-blue-600">
+                      {node.city ? node.city : "Unknown City"}
+                      {", "}
+                      {node.country}
+                    </span>
+                  </div>
+                  <div className="text-gray-800 font-semibold">
+                    {"Online Score: "}
+                    <span
+                      style={{
+                        color:
+                          node.online_score > 80
+                            ? "green"
+                            : node.online_score >= 50
+                            ? "orange"
+                            : "red",
+                      }}
+                    >
+                      {node.online_score.toFixed(2)} %
+                    </span>
+                  </div>
                 </Popup>
               </Marker>
             ))}

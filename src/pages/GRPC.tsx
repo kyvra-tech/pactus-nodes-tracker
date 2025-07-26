@@ -44,13 +44,13 @@ const GRPC: React.FC = () => {
           </Paragraph>
         </div>
 
-        <div className="my-6">
+        {/* <div className="my-6">
           <NodeInputForm
             onSubmit={(data) => {
               console.log("Submitted GRPC node: ", data);
             }}
           />
-        </div>
+        </div> */}
 
         <div className="space-y-1">
           {nodes.map((node, id) => (

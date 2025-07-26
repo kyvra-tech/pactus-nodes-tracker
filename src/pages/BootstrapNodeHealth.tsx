@@ -1,19 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Container from "../components/shared/Container";
 import Title from "../components/shared/Title";
 import Paragraph from "../components/shared/Paragraph";
-import bootstrapNodes from "../data/bootstrap_nodes.json";
 
-interface StatusItem {
-  color: number; // 0 = red, 1,2 = green
-  date?: string;
-}
+type DailyStatus = {
+  color: number;
+  date: string;
+};
 
-interface Node {
+type BootstrapNode = {
   name: string;
-  status: StatusItem[];
+  email: string;
+  website: string;
+  address: string;
+  status: DailyStatus[];
   overallScore: number;
-}
+};
 
 const getStatusColor = (code: number): string => {
   switch (code) {
@@ -27,8 +29,35 @@ const getStatusColor = (code: number): string => {
   }
 };
 
+const API_URL = "http://127.0.0.1:4622/api/v1/bootstrap";
+
 const BootstrapNodeHealth: React.FC = () => {
-  const nodes: Node[] = bootstrapNodes;
+  //const nodes: Node[] = bootstrapNodes;
+  const [nodes, setNodes] = useState<BootstrapNode[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    fetch(API_URL)
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to fetch bootstrap nodes");
+        return res.json();
+      })
+      .then((data) => {
+        console.log("API response:", data); // Add this line
+        // If data is { data: [...] }, use setNodes(data.data)
+        // If data is [...], use setNodes(data)
+        setNodes(Array.isArray(data) ? data : data.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
 
   return (
     <section className="mt-16 min-h-screen">
