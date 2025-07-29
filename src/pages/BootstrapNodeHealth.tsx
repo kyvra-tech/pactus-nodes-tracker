@@ -74,10 +74,7 @@ const BootstrapNodeHealth: React.FC = () => {
 
         <div className="space-y-1">
           {nodes.map((node, id) => (
-            <div
-              key={id}
-              className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 px-5 py-4 bg-gray-100 dark:bg-gray-800 rounded-md border border-gray-300 dark:border-gray-700"
-            >
+            <div key={id} className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 px-5 py-4 bg-gray-100 dark:bg-gray-800 rounded-md border border-gray-300 dark:border-gray-700">
               {/* LEFT: NODE NAME & STATUS BARS */}
               <div className="flex w-full items-center gap-4">
                 {/* FIXED WIDTH FOR NAME */}

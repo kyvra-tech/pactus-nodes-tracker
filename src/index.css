@@ -33,3 +33,13 @@ html {
 body {
   font-family: sans-serif, Arial, Helvetica, sans-serif;
 }
+
+.leaflet-control-attribution {
+  white-space: nowrap;
+}
+
+.leaflet-control-attribution a[href*="leaflet"],
+.leaflet-control-attribution a[href*="leaflet"] ~ span,
+.leaflet-control-attribution a[href*="leaflet"]::after {
+  display: none !important;
+}
