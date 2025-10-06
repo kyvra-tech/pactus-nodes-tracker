@@ -25,22 +25,22 @@ const NavBar: React.FC = () => {
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   return (
-    <header className="bg-white dark:bg-gray-900 shadow-sm sticky top-0 z-50 h-20">
-      <Container>
-        <nav className="flex items-center justify-between py-4">
-          {/* Logo */}
-          <a href="/" className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center">
-              <img
-                src="/logos/ptn.svg"
-                alt="Logo"
-                className="w-full h-full object-cover rounded-full"
-              />
-            </div>
-            <span className="text-xl font-bold text-gray-800 dark:text-white">
-              Pactus Nodes Tracker
-            </span>
-          </a>
+    <header className="bg-white/95 dark:bg-gray-900/95 backdrop-blur-md shadow-lg sticky top-0 z-50 border-b border-gray-200 dark:border-gray-700">
+    <Container>
+      <nav className="flex items-center justify-between py-4">
+        {/* Logo */}
+        <a href="/" className="flex items-center gap-3 group">
+          <div className="flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-200">
+            <img
+              src="/logos/ptn.svg"
+              alt="Logo"
+              className="w-8 h-8 object-cover"
+            />
+          </div>
+          <span className="text-xl font-bold text-gray-800 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200">
+            Pactus Nodes Tracker
+          </span>
+        </a>
           {/* End Logo */}
 
           {/* Desktop Nav */}
