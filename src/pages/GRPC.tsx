@@ -2,7 +2,7 @@ import React from "react";
 import Container from "../components/shared/Container";
 import Title from "../components/shared/Title";
 import Paragraph from "../components/shared/Paragraph";
-import NodeInputForm from "../components/shared/NodeInputForm";
+// import NodeInputForm from "../components/shared/NodeInputForm";
 import bootstrapNodes from "../data/bootstrap_nodes.json";
 
 interface StatusItem {

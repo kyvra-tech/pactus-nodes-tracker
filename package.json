@@ -2,7 +2,6 @@
   "name": "pactus-nodes-tracker",
   "description": "A comprehensive web interface for monitoring and visualizing Pactus network nodes health and distribution",
   "version": "1.0.0",
-  "private": false,
   "type": "module",
   "homepage": "https://github.com/kyvra-tech/pactus-nodes-tracker",
   "repository": {
