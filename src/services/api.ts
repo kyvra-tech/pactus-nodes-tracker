@@ -16,6 +16,28 @@ export interface BootstrapNode {
   overallScore: number;
 }
 
+export interface GRPCNode {
+  name: string;
+  status: DailyStatus[] | null;
+  overallScore: number;
+  address: string;
+  network: string;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+export interface JsonRPCNode {
+  name: string;
+  status: DailyStatus[] | null;
+  overallScore: number;
+  address: string;
+  network: string;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+
 export interface PeerNode {
     name: string;
     country: string;
@@ -55,8 +77,17 @@ class ApiService {
   async getBootstrapNodes(): Promise<BootstrapNode[]> {
     return this.request<BootstrapNode[]>(apiConfig.endpoints.bootstrap);
   }
+  // GRPC nodes
+  async getGRPCNodes(): Promise<GRPCNode[]> {
+    return this.request<GRPCNode[]>(apiConfig.endpoints.grpc);
+  }
   async getPeerNodes(): Promise<PeerNode[]> { //
     return this.request< PeerNode[]>(apiConfig.endpoints.peers);
+  }
+
+  // JsonRPC nodes
+  async getJsonRPCNodes(): Promise<JsonRPCNode[]> {
+    return this.request<JsonRPCNode[]>(apiConfig.endpoints.jsonRpc);
   }
 
   // Health check

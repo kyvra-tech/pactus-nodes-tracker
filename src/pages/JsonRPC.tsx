@@ -1,21 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Container from "../components/shared/Container";
 import Title from "../components/shared/Title";
 import Paragraph from "../components/shared/Paragraph";
-import bootstrapNodes from "../data/bootstrap_nodes.json";
+import { apiService, JsonRPCNode } from "../services/api";
 // import NodeInputForm from "../components/shared/NodeInputForm";
-
-interface StatusItem {
-  color: number; // 0 = red, 1,2 = green
-  date?: string;
-}
-
-interface Node {
-  name: string;
-  status: StatusItem[];
-  overallScore: number;
-}
-
 const getStatusColor = (code: number): string => {
   switch (code) {
     case 0:
@@ -29,8 +17,37 @@ const getStatusColor = (code: number): string => {
 };
 
 const JsonRPC: React.FC = () => {
-  const nodes: Node[] = bootstrapNodes;
+  const [nodes, setNodes] = useState<JsonRPCNode[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
+  useEffect(() => {
+    const fetchNodes = async () => {
+      try {
+        const data = await apiService.getGRPCNodes();
+        setNodes(data.filter((node) => node.network === "mainnet"));
+        setLoading(false);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Failed to fetch GRPC nodes");
+        setLoading(false);
+      }
+    };
+    fetchNodes();
+  }, []);
+
+  if (loading)
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="text-lg text-white">Loading json rpc nodes...</div>
+      </div>
+    );
+
+  if (error)
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="text-red-500">Error: {error}</div>
+      </div>
+    );
   return (
     <section className="mt-16 min-h-screen">
       {/* <section className="mt-16 bg-[#0d1117] min-h-screen text-white"> */}
@@ -67,7 +84,7 @@ const JsonRPC: React.FC = () => {
 
                 {/* FLEXIBLE STATUS BAR */}
                 <div className="flex flex-1 gap-[1px]">
-                  {node.status.map((stat, i) => (
+                  {node.status && node.status.length > 0 ? node.status.map((stat, i) => (
                     <div
                       key={i}
                       title={stat.date ? `Date: ${stat.date}` : "No date"}
@@ -75,7 +92,11 @@ const JsonRPC: React.FC = () => {
                         stat.color
                       )}`}
                     />
-                  ))}
+                  )) : (
+                    <div className="flex-1 h-[36px] rounded-xs bg-gray-300 dark:bg-gray-600 flex items-center justify-center">
+                      <span className="text-xs text-gray-500">No status data</span>
+                    </div>
+                  )}
                 </div>
               </div>
 
