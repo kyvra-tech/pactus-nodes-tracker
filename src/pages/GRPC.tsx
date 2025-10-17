@@ -1,21 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Container from "../components/shared/Container";
 import Title from "../components/shared/Title";
 import Paragraph from "../components/shared/Paragraph";
-// import NodeInputForm from "../components/shared/NodeInputForm";
-import bootstrapNodes from "../data/bootstrap_nodes.json";
-
-interface StatusItem {
-  color: number; // 0 = red, 1,2 = green
-  date?: string;
-}
-
-interface Node {
-  name: string;
-  status: StatusItem[];
-  overallScore: number;
-}
-
+import { apiService, GRPCNode } from "../services/api";
 const getStatusColor = (code: number): string => {
   switch (code) {
     case 0:
@@ -29,8 +16,42 @@ const getStatusColor = (code: number): string => {
 };
 
 const GRPC: React.FC = () => {
-  const nodes: Node[] = bootstrapNodes;
+  const [nodes, setNodes] = useState<GRPCNode[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
+  useEffect(() => {
+    const fetchNodes = async () => {
+      try {
+        const data = await apiService.getGRPCNodes();
+
+        // Handle null status arrays
+        const nodesWithStatus = data.map((node) => ({
+          ...node,
+          status: node.status || [],
+        }));
+        setNodes(nodesWithStatus.filter((node) => node.network === "mainnet"));
+        setLoading(false);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Failed to fetch GRPC nodes");
+        setLoading(false);
+      }
+    };
+    fetchNodes();
+  }, []);
+  if (loading)
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="text-lg text-white">Loading bootstrap nodes...</div>
+      </div>
+    );
+
+  if (error)
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="text-red-500">Error: {error}</div>
+      </div>
+    );
   return (
     <section className="mt-16 min-h-screen">
       {/* <section className="mt-16 bg-[#0d1117] min-h-screen text-white"> */}
@@ -67,15 +88,40 @@ const GRPC: React.FC = () => {
 
                 {/* FLEXIBLE STATUS BAR */}
                 <div className="flex flex-1 gap-[1px]">
-                  {node.status.map((stat, i) => (
-                    <div
-                      key={i}
-                      title={stat.date ? `Date: ${stat.date}` : "No date"}
-                      className={`flex-1 h-[36px] rounded-xs ${getStatusColor(
-                        stat.color
-                      )}`}
-                    />
-                  ))}
+                {node.status && node.status.length > 0 ? (
+                      node.status.map((stat, i) => {
+                        const statusText =
+                          stat.color === 1 || stat.color === 2
+                            ? "Healthy"
+                            : stat.color === 0
+                            ? "Failed"
+                            : "Unknown";
+                        return (
+                          <div
+                            key={i}
+                            className={`group relative flex-1 h-[36px] rounded-xs ${getStatusColor(
+                              stat.color
+                            )} cursor-pointer transition-transform hover:scale-105`}
+                          >
+                            {/* Custom Tooltip */}
+                            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 bg-gray-900 dark:bg-gray-700 text-white text-xs rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-10 pointer-events-none">
+                              <div className="font-semibold">
+                                {stat.date || "No date"}
+                              </div>
+                              <div className="text-gray-300">{statusText}</div>
+                              {/* Arrow */}
+                              <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-px">
+                                <div className="border-4 border-transparent border-t-gray-900 dark:border-t-gray-700"></div>
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      })
+                    ) : (
+                    <div className="flex-1 h-[36px] rounded-xs bg-gray-300 dark:bg-gray-600 flex items-center justify-center">
+                      <span className="text-xs text-gray-500">No status data</span>
+                    </div>
+                  )}
                 </div>
               </div>
 

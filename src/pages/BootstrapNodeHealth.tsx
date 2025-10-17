@@ -47,7 +47,7 @@ const BootstrapNodeHealth: React.FC = () => {
   if (loading)
     return (
       <div className="flex justify-center items-center min-h-screen">
-        <div className="text-lg">Loading bootstrap nodes...</div>
+        <div className="text-lg text-white">Loading bootstrap nodes...</div>
       </div>
     );
 
@@ -160,7 +160,7 @@ const BootstrapNodeHealth: React.FC = () => {
             ))
           ) : (
             <div className="flex justify-center items-center min-h-screen">
-              <div className="text-gray-500">No bootstrap nodes found</div>
+              <div className="text-white">No bootstrap nodes found</div>
             </div>
           )}
         </div>
