@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import Container from "../shared/Container";
 import NavItem from "../shared/NavItem";
 import { setTheme, getInitialTheme } from "../../utils/theme";
-import ThemeToggle from "../shared/ThemeToggle";
+// import ThemeToggle from "../shared/ThemeToggle";
 
 const navItems = [
   { href: "/", text: "Peer Nodes" },
@@ -13,7 +13,7 @@ const navItems = [
 ];
 
 const NavBar: React.FC = () => {
-  const [isDarkMode, setIsDarkMode] = useState<boolean>(getInitialTheme);
+  const isDarkMode = getInitialTheme();
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const location = useLocation();
 
@@ -21,7 +21,7 @@ const NavBar: React.FC = () => {
     setTheme(isDarkMode);
   }, [isDarkMode]);
 
-  const toggleTheme = () => setIsDarkMode(!isDarkMode);
+  // const toggleTheme = () => setIsDarkMode(!isDarkMode);
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   return (
@@ -56,7 +56,7 @@ const NavBar: React.FC = () => {
 
           {/* Theme & Hamburger */}
           <div className="flex items-center lg:gap-4 gap-2">
-            <ThemeToggle isDarkmode={isDarkMode} toggleTheme={toggleTheme} />
+            {/* <ThemeToggle isDarkmode={isDarkMode} toggleTheme={toggleTheme} /> */}
             <button
               onClick={toggleMenu}
               className="lg:hidden focus:outline-none"
