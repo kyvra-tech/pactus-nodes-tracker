@@ -8,7 +8,7 @@ export default defineConfig({
     // Proxy API calls in development (optional)
     proxy: {
       '/api': {
-        target: 'http://127.0.0.1:4622',
+        target: 'https://staging-api.kyvra.xyz',
         changeOrigin: true,
       },
     },
