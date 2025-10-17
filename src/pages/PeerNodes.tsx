@@ -7,6 +7,7 @@ import Container from "../components/shared/Container";
 // import Paragraph from "../components/shared/Paragraph";
 //import peerNodes from "../data/peer_nodes.json";
 import Stats from "../components/sections/Stats";
+import { apiConfig } from "../config/api";
 
 type PeerNode = {
   name: string;
@@ -23,7 +24,7 @@ const nodeIcon = new L.Icon({
   iconAnchor: [15, 45],
 });
 
-const API_URL = "http://127.0.0.1:4622/api/v1/peers";
+const API_URL = apiConfig.endpoints.peers;
 
 const PeerNodesMap: React.FC = () => {
   // START CHANGE THEME ON LOAD
