@@ -9,8 +9,11 @@ importers:
   .:
     dependencies:
       '@heroicons/react':
-        specifier: ^2.1.5
+        specifier: ^2.2.0
         version: 2.2.0(react@18.3.1)
+      '@tanstack/react-query':
+        specifier: ^5.90.5
+        version: 5.90.5(react@18.3.1)
       '@tippyjs/react':
         specifier: ^4.2.6
         version: 4.2.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -18,7 +21,7 @@ importers:
         specifier: ^5.3.3
         version: 5.3.3
       axios:
-        specifier: ^1.8.4
+        specifier: ^1.12.0
         version: 1.12.0
       d3-geo:
         specifier: ^3.1.1
@@ -33,74 +36,74 @@ importers:
         specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
       react-icons:
-        specifier: ^5.3.0
+        specifier: ^5.5.0
         version: 5.5.0(react@18.3.1)
       react-leaflet:
         specifier: ^4.2.1
         version: 4.2.1(leaflet@1.9.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-router-dom:
-        specifier: ^6.27.0
+        specifier: ^6.30.1
         version: 6.30.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-simple-maps:
         specifier: ^1.0.0
         version: 1.0.0(prop-types@15.8.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       sweetalert2:
-        specifier: ^11.6.13
+        specifier: ^11.23.0
         version: 11.23.0
       sweetalert2-react-content:
         specifier: ^5.1.0
         version: 5.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sweetalert2@11.23.0)
     devDependencies:
       '@eslint/js':
-        specifier: ^9.13.0
+        specifier: ^9.35.0
         version: 9.35.0
       '@types/crypto-js':
         specifier: ^4.2.2
         version: 4.2.2
       '@types/leaflet':
-        specifier: ^1.9.17
+        specifier: ^1.9.20
         version: 1.9.20
       '@types/react':
-        specifier: ^18.3.12
+        specifier: ^18.3.24
         version: 18.3.24
       '@types/react-dom':
-        specifier: ^18.3.1
+        specifier: ^18.3.7
         version: 18.3.7(@types/react@18.3.24)
       '@types/react-simple-maps':
         specifier: ^3.0.6
         version: 3.0.6
       '@vitejs/plugin-react':
-        specifier: ^4.3.3
+        specifier: ^4.7.0
         version: 4.7.0(vite@5.4.20)
       autoprefixer:
-        specifier: ^10.4.20
+        specifier: ^10.4.21
         version: 10.4.21(postcss@8.5.6)
       eslint:
-        specifier: ^9.13.0
+        specifier: ^9.35.0
         version: 9.35.0(jiti@1.21.7)
       eslint-plugin-react-hooks:
-        specifier: ^5.0.0
+        specifier: ^5.2.0
         version: 5.2.0(eslint@9.35.0(jiti@1.21.7))
       eslint-plugin-react-refresh:
-        specifier: ^0.4.14
+        specifier: ^0.4.20
         version: 0.4.20(eslint@9.35.0(jiti@1.21.7))
       globals:
-        specifier: ^15.11.0
+        specifier: ^15.15.0
         version: 15.15.0
       postcss:
-        specifier: ^8.4.47
+        specifier: ^8.5.6
         version: 8.5.6
       tailwindcss:
-        specifier: ^3.4.14
+        specifier: ^3.4.17
         version: 3.4.17
       typescript:
-        specifier: ~5.6.2
+        specifier: ~5.6.3
         version: 5.6.3
       typescript-eslint:
-        specifier: ^7.3.1
+        specifier: ^7.18.0
         version: 7.18.0(eslint@9.35.0(jiti@1.21.7))(typescript@5.6.3)
       vite:
-        specifier: ^5.4.10
+        specifier: ^5.4.20
         version: 5.4.20
 
 packages:
@@ -547,6 +550,14 @@ packages:
     cpu: [x64]
     os: [win32]
 
+  '@tanstack/query-core@5.90.5':
+    resolution: {integrity: sha512-wLamYp7FaDq6ZnNehypKI5fNvxHPfTYylE0m/ZpuuzJfJqhR5Pxg9gvGBHZx4n7J+V5Rg5mZxHHTlv25Zt5u+w==}
+
+  '@tanstack/react-query@5.90.5':
+    resolution: {integrity: sha512-pN+8UWpxZkEJ/Rnnj2v2Sxpx1WFlaa9L6a4UO89p6tTQbeo+m0MS8oYDjbggrR8QcTyjKoYWKS3xJQGr3ExT8Q==}
+    peerDependencies:
+      react: ^18 || ^19
+
   '@tippyjs/react@4.2.6':
     resolution: {integrity: sha512-91RicDR+H7oDSyPycI13q3b7o4O60wa2oRbjlz2fyRLmHImc4vyDwuUP8NtZaN0VARJY5hybvDYrFzhY9+Lbyw==}
     peerDependencies:
@@ -775,8 +786,8 @@ packages:
     resolution: {integrity: sha512-QOSvevhslijgYwRx6Rv7zKdMF8lbRmx+uQGx2+vDc+KI/eBnsy9kit5aj23AgGu3pa4t9AgwbnXWqS+iOY+2aA==}
     engines: {node: '>= 6'}
 
-  caniuse-lite@1.0.30001741:
-    resolution: {integrity: sha512-QGUGitqsc8ARjLdgAfxETDhRbJ0REsP6O3I96TAth/mVjh2cYzN2u+3AzPP3aVSm2FehEItaJw1xd+IGBXWeSw==}
+  caniuse-lite@1.0.30001751:
+    resolution: {integrity: sha512-A0QJhug0Ly64Ii3eIqHu5X51ebln3k4yTUkY1j8drqpWHVreg/VLijN48cZ1bYPiqOQuqpkIKnzr/Ul8V+p6Cw==}
 
   chalk@4.1.2:
     resolution: {integrity: sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA==}
@@ -2003,6 +2014,13 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.50.1':
     optional: true
 
+  '@tanstack/query-core@5.90.5': {}
+
+  '@tanstack/react-query@5.90.5(react@18.3.1)':
+    dependencies:
+      '@tanstack/query-core': 5.90.5
+      react: 18.3.1
+
   '@tippyjs/react@4.2.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       react: 18.3.1
@@ -2224,7 +2242,7 @@ snapshots:
   autoprefixer@10.4.21(postcss@8.5.6):
     dependencies:
       browserslist: 4.25.4
-      caniuse-lite: 1.0.30001741
+      caniuse-lite: 1.0.30001751
       fraction.js: 4.3.7
       normalize-range: 0.1.2
       picocolors: 1.1.1
@@ -2258,7 +2276,7 @@ snapshots:
 
   browserslist@4.25.4:
     dependencies:
-      caniuse-lite: 1.0.30001741
+      caniuse-lite: 1.0.30001751
       electron-to-chromium: 1.5.218
       node-releases: 2.0.20
       update-browserslist-db: 1.1.3(browserslist@4.25.4)
@@ -2272,7 +2290,7 @@ snapshots:
 
   camelcase-css@2.0.1: {}
 
-  caniuse-lite@1.0.30001741: {}
+  caniuse-lite@1.0.30001751: {}
 
   chalk@4.1.2:
     dependencies:

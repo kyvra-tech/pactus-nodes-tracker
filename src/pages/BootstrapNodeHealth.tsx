@@ -3,6 +3,9 @@ import Container from "../components/shared/Container";
 import Title from "../components/shared/Title";
 import Paragraph from "../components/shared/Paragraph";
 import { apiService, BootstrapNode } from "../services/api";
+import { SkeletonLoader } from "../components/shared/SkeletonLoader";
+import { useToast } from "../hook/useToast";
+import { ToastContainer } from "../components/shared/Toast";
 
 const getStatusColor = (code: number): string => {
   switch (code) {
@@ -20,7 +23,7 @@ const BootstrapNodeHealth: React.FC = () => {
   const [nodes, setNodes] = useState<BootstrapNode[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
+  const { toasts, showToast } = useToast();
   useEffect(() => {
     const fetchNodes = async () => {
       try {
@@ -33,33 +36,29 @@ const BootstrapNodeHealth: React.FC = () => {
         }));
         setNodes(nodesWithStatus);
       } catch (err) {
-        setError(
-          err instanceof Error ? err.message : "Failed to fetch bootstrap nodes"
-        );
+          setError(
+            err instanceof Error ? err.message : "Failed to fetch bootstrap nodes"
+          );
+        showToast(err instanceof Error ? err.message : "Failed to fetch bootstrap nodes", "error");
       } finally {
         setLoading(false);
       }
     };
 
     fetchNodes();
-  }, []);
+  }, [showToast]);
 
-  if (loading)
-    return (
-      <div className="flex justify-center items-center min-h-screen">
-        <div className="text-lg text-white">Loading bootstrap nodes...</div>
-      </div>
-    );
 
   if (error)
     return (
       <div className="flex justify-center items-center min-h-screen">
-        <div className="text-red-500">Error: {error}</div>
+        <div className="text-gray-600 dark:text-gray-400">{error}</div>
       </div>
     );
 
   return (
     <section className="mt-16 min-h-screen">
+      <ToastContainer toasts={toasts} />
       <Container>
         <div className="text-left max-w-7xl mx-auto mb-6">
           <Title style="font-bold text-gray-800 dark:text-white text-2xl">
@@ -70,7 +69,16 @@ const BootstrapNodeHealth: React.FC = () => {
             daily.
           </Paragraph>
         </div>
-
+        {loading ? (
+        <SkeletonLoader variant="status-bar" count={8} />
+      ) : error ? (
+        <div className="flex justify-center items-center py-12">
+          <div className="text-center">
+            <div className="text-red-500 text-lg font-semibold mb-2">Error loading nodes</div>
+            <p className="text-gray-600 dark:text-gray-400">{error}</p>
+          </div>
+        </div>
+      ) : (
         <div className="space-y-1">
           {nodes.length > 0 ? (
             nodes.map((node, id) => (
@@ -164,6 +172,7 @@ const BootstrapNodeHealth: React.FC = () => {
             </div>
           )}
         </div>
+ )}
       </Container>
     </section>
   );

@@ -3,7 +3,10 @@ import Container from "../components/shared/Container";
 import Title from "../components/shared/Title";
 import Paragraph from "../components/shared/Paragraph";
 import { apiService, JsonRPCNode } from "../services/api";
-// import NodeInputForm from "../components/shared/NodeInputForm";
+import { SkeletonLoader } from "../components/shared/SkeletonLoader";
+import { useToast } from "../hook/useToast";
+import { ToastContainer } from "../components/shared/Toast";
+
 const getStatusColor = (code: number): string => {
   switch (code) {
     case 0:
@@ -20,37 +23,33 @@ const JsonRPC: React.FC = () => {
   const [nodes, setNodes] = useState<JsonRPCNode[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { toasts, showToast } = useToast();
 
   useEffect(() => {
     const fetchNodes = async () => {
       try {
         const data = await apiService.getGRPCNodes();
         setNodes(data.filter((node) => node.network === "mainnet"));
-        setLoading(false);
       } catch (err) {
-        setError(err instanceof Error ? err.message : "Failed to fetch GRPC nodes");
+        const errorMsg = err instanceof Error ? err.message : "Failed to fetch GRPC nodes";
+        setError(errorMsg);
+        showToast(errorMsg, "error");
+      } finally {
         setLoading(false);
       }
     };
     fetchNodes();
-  }, []);
-
-  if (loading)
-    return (
-      <div className="flex justify-center items-center min-h-screen">
-        <div className="text-lg text-white">Loading json rpc nodes...</div>
-      </div>
-    );
+  }, [showToast]);
 
   if (error)
     return (
       <div className="flex justify-center items-center min-h-screen">
-        <div className="text-red-500">Error: {error}</div>
+        <div className="text-gray-600 dark:text-gray-400">{error}</div>
       </div>
     );
   return (
     <section className="mt-16 min-h-screen">
-      {/* <section className="mt-16 bg-[#0d1117] min-h-screen text-white"> */}
+      <ToastContainer toasts={toasts} />
       <Container>
         <div className="text-left max-w-7xl mx-auto mb-6">
           <Title style="font-bold text-gray-800 dark:text-white text-2xl">
@@ -68,7 +67,22 @@ const JsonRPC: React.FC = () => {
             }}
           />
         </div> */}
-
+  {loading ? (
+          <SkeletonLoader variant="status-bar" count={5} />
+        ) : error ? (
+          <div className="flex justify-center items-center py-12">
+            <div className="text-center">
+              <div className="text-red-500 text-lg font-semibold mb-2">Error loading nodes</div>
+              <p className="text-gray-600 dark:text-gray-400">{error}</p>
+              <button
+                onClick={() => window.location.reload()}
+                className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+              >
+                Retry
+              </button>
+            </div>
+          </div>
+        ) : (
         <div className="space-y-1">
           {nodes.map((node, id) => (
             <div
@@ -115,6 +129,7 @@ const JsonRPC: React.FC = () => {
             </div>
           ))}
         </div>
+         )}
       </Container>
     </section>
   );
