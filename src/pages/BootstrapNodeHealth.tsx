@@ -17,19 +17,47 @@ const getStatusColor = (code: number): string => {
   }
 };
 
+// Helper function to generate last 30 days
+const getLast30Days = (): string[] => {
+  const days: string[] = [];
+  const today = new Date();
+  
+  for (let i = 29; i >= 0; i--) {
+    const date = new Date(today);
+    date.setDate(date.getDate() - i);
+    // Format as YYYY-MM-DD to match backend format
+    const dateStr = date.toISOString().split('T')[0];
+    days.push(dateStr);
+  }
+  
+  return days;
+};
+
+// Helper function to map status data to 30-day array
+const mapStatusToLast30Days = (status: Array<{ date: string; color: number }>) => {
+  const last30Days = getLast30Days();
+  const statusMap = new Map(status.map(s => [s.date, s.color]));
+  
+  return last30Days.map(date => ({
+    date,
+    color: statusMap.get(date) ?? -1, // -1 means no data
+  }));
+};
+
 const BootstrapNodeHealth: React.FC = () => {
   const [nodes, setNodes] = useState<BootstrapNode[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  
   useEffect(() => {
     const fetchNodes = async () => {
       try {
         const data = await apiService.getBootstrapNodes();
 
-        // Handle null status arrays
+        // Handle null status arrays and map to 30-day format
         const nodesWithStatus = data.map((node) => ({
           ...node,
-          status: node.status || [],
+          status: mapStatusToLast30Days(node.status || []),
         }));
         setNodes(nodesWithStatus);
       } catch (err) {
@@ -61,7 +89,7 @@ const BootstrapNodeHealth: React.FC = () => {
           </Title>
           <Paragraph className="text-gray-600 dark:text-gray-300 mt-2">
             Visual representation of bootstrap node health. Health checks run
-            daily.
+            daily. Showing last 30 days (oldest left, newest right).
           </Paragraph>
         </div>
         {loading ? (
@@ -91,45 +119,37 @@ const BootstrapNodeHealth: React.FC = () => {
                     </span>
                   </span>
 
-                  {/* FLEXIBLE STATUS BAR */}
+                  {/* FLEXIBLE STATUS BAR - Always 30 indicators */}
                   <div className="flex flex-1 gap-[1px]">
-                    {node.status && node.status.length > 0 ? (
-                      node.status.map((stat, i) => {
-                        const statusText =
-                          stat.color === 1 || stat.color === 2
-                            ? "Healthy"
-                            : stat.color === 0
-                            ? "Failed"
-                            : "Unknown";
-                        return (
-                          <div
-                            key={i}
-                            className={`group relative flex-1 h-[36px] rounded-xs ${getStatusColor(
-                              stat.color
-                            )} cursor-pointer transition-transform hover:scale-105`}
-                          >
-                            {/* Custom Tooltip */}
-                            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 bg-gray-900 dark:bg-gray-700 text-white text-xs rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-10 pointer-events-none">
-                              <div className="font-semibold">
-                                {stat.date || "No date"}
-                              </div>
-                              <div className="text-gray-300">{statusText}</div>
-                              {/* Arrow */}
-                              <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-px">
-                                <div className="border-4 border-transparent border-t-gray-900 dark:border-t-gray-700"></div>
-                              </div>
+                    {node.status?.map((stat, i) => {
+                      const statusText =
+                        stat.color === 1 || stat.color === 2
+                          ? "Healthy"
+                          : stat.color === 0
+                          ? "Failed"
+                          : "No data";
+                      
+                      return (
+                        <div
+                          key={i}
+                          className={`group relative flex-1 h-[36px] rounded-xs ${getStatusColor(
+                            stat.color
+                          )} cursor-pointer transition-transform hover:scale-105`}
+                        >
+                          {/* Custom Tooltip */}
+                          <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 bg-gray-900 dark:bg-gray-700 text-white text-xs rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-10 pointer-events-none">
+                            <div className="font-semibold">
+                              {stat.date}
+                            </div>
+                            <div className="text-gray-300">{statusText}</div>
+                            {/* Arrow */}
+                            <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-px">
+                              <div className="border-4 border-transparent border-t-gray-900 dark:border-t-gray-700"></div>
                             </div>
                           </div>
-                        );
-                      })
-                    ) : (
-                      // Show placeholder when no status data
-                      <div className="flex-1 h-[36px] rounded-xs bg-gray-300 dark:bg-gray-600 flex items-center justify-center">
-                        <span className="text-xs text-gray-500">
-                          No health data yet - checks run daily
-                        </span>
-                      </div>
-                    )}
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
 
@@ -141,19 +161,19 @@ const BootstrapNodeHealth: React.FC = () => {
                   <div className="flex items-center gap-1">
                     <div
                       className={`w-3 h-3 rounded-full shadow-md ${
-                        node.status && node.status.length > 0
+                        node.status?.some(s => s.color >= 0)
                           ? "bg-green-500"
                           : "bg-gray-400"
                       }`}
                     />
                     <span
                       className={`text-sm font-medium ${
-                        node.status && node.status.length > 0
+                        node.status?.some(s => s.color >= 0)
                           ? "text-green-600 dark:text-green-500"
                           : "text-gray-500 dark:text-gray-400"
                       }`}
                     >
-                      {node.status && node.status.length > 0
+                      {node.status?.some((s: { color: number; }) => s.color >= 0)
                         ? "Monitored"
                         : "Pending"}
                     </span>
