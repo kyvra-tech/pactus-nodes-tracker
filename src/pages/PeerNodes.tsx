@@ -3,9 +3,7 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import Container from "../components/shared/Container";
-// import Title from "../components/shared/Title";
-// import Paragraph from "../components/shared/Paragraph";
-//import peerNodes from "../data/peer_nodes.json";
+import { SkeletonLoader } from "../components/shared/SkeletonLoader";
 import Stats from "../components/sections/Stats";
 import { apiConfig } from "../config/api";
 
@@ -80,8 +78,14 @@ const PeerNodesMap: React.FC = () => {
       });
   }, []);
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
+  if (loading) return <SkeletonLoader variant="map" />;
+  if (error) return (
+    <div className="flex justify-center items-center min-h-screen">
+      <div className="text-center">
+        <p className="text-gray-600 dark:text-gray-400">{error}</p>
+      </div>
+    </div>
+  );
 
   return (
     <div className="min-h-screen">
