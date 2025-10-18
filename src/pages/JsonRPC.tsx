@@ -4,8 +4,6 @@ import Title from "../components/shared/Title";
 import Paragraph from "../components/shared/Paragraph";
 import { apiService, JsonRPCNode } from "../services/api";
 import { SkeletonLoader } from "../components/shared/SkeletonLoader";
-import { useToast } from "../hook/useToast";
-import { ToastContainer } from "../components/shared/Toast";
 
 const getStatusColor = (code: number): string => {
   switch (code) {
@@ -23,7 +21,6 @@ const JsonRPC: React.FC = () => {
   const [nodes, setNodes] = useState<JsonRPCNode[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const { toasts, showToast } = useToast();
 
   useEffect(() => {
     const fetchNodes = async () => {
@@ -33,13 +30,12 @@ const JsonRPC: React.FC = () => {
       } catch (err) {
         const errorMsg = err instanceof Error ? err.message : "Failed to fetch GRPC nodes";
         setError(errorMsg);
-        showToast(errorMsg, "error");
       } finally {
         setLoading(false);
       }
     };
     fetchNodes();
-  }, [showToast]);
+  }, []);
 
   if (error)
     return (
@@ -49,7 +45,6 @@ const JsonRPC: React.FC = () => {
     );
   return (
     <section className="mt-16 min-h-screen">
-      <ToastContainer toasts={toasts} />
       <Container>
         <div className="text-left max-w-7xl mx-auto mb-6">
           <Title style="font-bold text-gray-800 dark:text-white text-2xl">
