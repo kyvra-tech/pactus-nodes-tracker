@@ -81,7 +81,7 @@ const JsonRPC: React.FC = () => {
             JSON RPC Health Status
           </Title>
           <Paragraph className="text-gray-600 dark:text-gray-300 mt-2">
-            Visual representation of JSON-RPC health status. Showing last 30 days (oldest left, newest right).
+            Visual representation of JSON-RPC health status.
           </Paragraph>
         </div>
 

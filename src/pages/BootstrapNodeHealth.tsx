@@ -89,7 +89,7 @@ const BootstrapNodeHealth: React.FC = () => {
           </Title>
           <Paragraph className="text-gray-600 dark:text-gray-300 mt-2">
             Visual representation of bootstrap node health. Health checks run
-            daily. Showing last 30 days (oldest left, newest right).
+            daily.
           </Paragraph>
         </div>
         {loading ? (

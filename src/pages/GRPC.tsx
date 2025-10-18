@@ -75,7 +75,7 @@ const GRPC: React.FC = () => {
             GRPC Health Status
           </Title>
           <Paragraph className="text-gray-600 dark:text-gray-300 mt-2">
-            Visual representation of gRPC health status. Showing last 30 days (oldest left, newest right).
+            Visual representation of gRPC health status.
           </Paragraph>
         </div>
 
