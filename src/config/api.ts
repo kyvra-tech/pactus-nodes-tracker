@@ -11,7 +11,8 @@ interface ApiConfig {
     };
   }
   
-  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://staging-api.kyvra.xyz';
+  // const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:4622';
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://staging-api.kyvra.xyz';
   const API_VERSION = import.meta.env.VITE_API_VERSION || 'v1';
   
   export const apiConfig: ApiConfig = {

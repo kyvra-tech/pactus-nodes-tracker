@@ -3,26 +3,15 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import Container from "../components/shared/Container";
-import { SkeletonLoader } from "../components/shared/SkeletonLoader";
 import Stats from "../components/sections/Stats";
-import { apiConfig } from "../config/api";
 
-type PeerNode = {
-  name: string;
-  country: string;
-  city: string;
-  coordinates: [number, number];
-  online_score: number;
-};
-
-// CUSTOM MARKER ICON
-const nodeIcon = new L.Icon({
-  iconUrl: "https://unpkg.com/leaflet@1.9.3/dist/images/marker-icon.png",
-  iconSize: [30, 45],
-  iconAnchor: [15, 45],
+// CUSTOM KYVRA DEVELOPER ICON
+const kyvraIcon = new L.Icon({
+  iconUrl: "/logos/kyvra_tech_logo.png", // You'll need to add this icon to your public/logos folder
+  iconSize: [40, 40],
+  iconAnchor: [20, 20],
+  className: "pulse-animation", // Optional: for a pulsing effect
 });
-
-const API_URL = apiConfig.endpoints.peers;
 
 const PeerNodesMap: React.FC = () => {
   // START CHANGE THEME ON LOAD
@@ -56,36 +45,34 @@ const PeerNodesMap: React.FC = () => {
       ? "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
       : "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png";
 
-  const [nodes, setNodes] = useState<PeerNode[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  useEffect(() => {
-    fetch(API_URL)
-      .then((res) => {
-        if (!res.ok) throw new Error("Failed to fetch bootstrap nodes");
-        return res.json();
-      })
-      .then((data) => {
-        console.log("API response:", data); // Add this line
-        // If data is { data: [...] }, use setNodes(data.data)
-        // If data is [...], use setNodes(data)
-        setNodes(Array.isArray(data) ? data : data.data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        setError(err.message);
-        setLoading(false);
-      });
-  }, []);
+  // Center coordinates for the Kyvra developer marker
+  const kyvraPosition: [number, number] = [20, 0]; // This is the same as the map center
 
-  if (loading) return <SkeletonLoader variant="map" />;
-  if (error) return (
-    <div className="flex justify-center items-center min-h-screen">
-      <div className="text-center">
-        <p className="text-gray-600 dark:text-gray-400">{error}</p>
-      </div>
-    </div>
-  );
+  // useEffect(() => {
+  //   fetch(API_URL)
+  //     .then((res) => {
+  //       if (!res.ok) throw new Error("Failed to fetch bootstrap nodes");
+  //       return res.json();
+  //     })
+  //     .then((data) => {
+  //       console.log("API response:", data);
+  //       setNodes(Array.isArray(data) ? data : data.data);
+  //       setLoading(false);
+  //     })
+  //     .catch((err) => {
+  //       setError(err.message);
+  //       setLoading(false);
+  //     });
+  // }, []);
+
+  // if (loading) return <SkeletonLoader variant="map" />;
+  // if (error) return (
+  //   <div className="flex justify-center items-center min-h-screen">
+  //     <div className="text-center">
+  //       <p className="text-gray-600 dark:text-gray-400">{error}</p>
+  //     </div>
+  //   </div>
+  // );
 
   return (
     <div className="min-h-screen">
@@ -98,8 +85,8 @@ const PeerNodesMap: React.FC = () => {
             </h1>
             <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
               Explore real-time geographic distribution and health status of
-              active Pactus peer nodes around the world. Each marker represents a
-              node's location and operational state.
+              active Pactus peer nodes around the world. Each marker represents
+              a node's location and operational state.
             </p>
           </div>
         </Container>
@@ -117,7 +104,7 @@ const PeerNodesMap: React.FC = () => {
         <Container>
           <div className="relative z-0 rounded-2xl shadow-2xl overflow-hidden border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
             <MapContainer
-              center={[20, 0]}
+              center={kyvraPosition}
               zoom={2}
               scrollWheelZoom={true}
               style={{ height: "600px", width: "100%" }}
@@ -128,7 +115,28 @@ const PeerNodesMap: React.FC = () => {
                 url={tileLayerUrl}
               />
 
-              {nodes.map((node, index) => (
+              {/* Kyvra Developer Marker at center */}
+              <Marker position={kyvraPosition} icon={kyvraIcon}>
+                <Popup className="text-sm">
+                  <div className="text-gray-800 font-semibold">
+                    {"Developer: "}
+                    <span
+                      className="font-semibold"
+                      style={{ color: "#00B2A9" }}
+                    >
+                      Kyvra Tech
+                    </span>
+                  </div>
+                  <div className="text-gray-800 font-semibold">
+                    {"Status: "}
+                    <span className="font-semibold text-green-600">
+                      Active Development
+                    </span>
+                  </div>
+                </Popup>
+              </Marker>
+
+              {/* {nodes.map((node, index) => (
                 <Marker
                   key={index}
                   position={node.coordinates as [number, number]}
@@ -166,7 +174,7 @@ const PeerNodesMap: React.FC = () => {
                     </div>
                   </Popup>
                 </Marker>
-              ))}
+              ))} */}
             </MapContainer>
           </div>
         </Container>

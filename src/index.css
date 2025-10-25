@@ -5,7 +5,7 @@
 @import "tailwindcss/utilities";
 
 :root {
-  --color-bg: 255 255 255;
+  --color-bg: 17 24 39;  /* Changed from 3 7 18 to match Tailwind's gray-900 */
   --color-border: 255 255 255;
   --color-box: 255 255 255;
   --box-border: 229 231 235;
@@ -16,7 +16,7 @@
 }
 
 .dark {
-  --color-bg: 3 7 18;
+  --color-bg: 17 24 39;  /* Changed from 3 7 18 to match Tailwind's gray-900 */
   --color-box: 17 24 39;
   --box-border: 243 244 246/0.1;
   --box-sd: transparent;
@@ -32,6 +32,7 @@ html {
 
 body {
   font-family: sans-serif, Arial, Helvetica, sans-serif;
+  background-color:rgb(var(--color-bg));
 }
 
 .leaflet-control-attribution {

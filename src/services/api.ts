@@ -18,6 +18,8 @@ export interface BootstrapNode {
 
 export interface GRPCNode {
   name: string;
+  email: string;
+  website: string;
   status: DailyStatus[] | null;
   overallScore: number;
   address: string;
@@ -28,6 +30,7 @@ export interface GRPCNode {
 }
 export interface JsonRPCNode {
   name: string;
+  email: string;
   status: DailyStatus[] | null;
   overallScore: number;
   address: string;
