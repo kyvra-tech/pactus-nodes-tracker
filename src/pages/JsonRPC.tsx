@@ -109,9 +109,14 @@ const JsonRPC: React.FC = () => {
             >
               {/* LEFT: NODE NAME & STATUS BARS */}
               <div className="flex w-full items-center gap-4">
-                <span className="w-[160px] text-sm text-gray-800 dark:text-gray-300 font-semibold truncate">
-                  {node.name}
-                </span>
+              <span className="w-[160px] text-sm text-gray-800 dark:text-gray-300 font-semibold truncate">
+                    {node.name || node.address || "Unknown"} <br />
+                    {node.email && (
+                      <span className="text-gray-500 dark:text-gray-400 text-xs">
+                        {node.email}
+                      </span>
+                    )}
+                  </span>
 
                 {/* FLEXIBLE STATUS BAR - Always 30 indicators */}
                 <div className="flex flex-1 gap-[1px]">

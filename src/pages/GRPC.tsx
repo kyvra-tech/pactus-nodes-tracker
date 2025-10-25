@@ -21,23 +21,25 @@ const getStatusColor = (code: number): string => {
 const getLast30Days = (): string[] => {
   const days: string[] = [];
   const today = new Date();
-  
+
   for (let i = 29; i >= 0; i--) {
     const date = new Date(today);
     date.setDate(date.getDate() - i);
-    const dateStr = date.toISOString().split('T')[0];
+    const dateStr = date.toISOString().split("T")[0];
     days.push(dateStr);
   }
-  
+
   return days;
 };
 
 // Helper function to map status data to 30-day array
-const mapStatusToLast30Days = (status: Array<{ date: string; color: number }>) => {
+const mapStatusToLast30Days = (
+  status: Array<{ date: string; color: number }>
+) => {
   const last30Days = getLast30Days();
-  const statusMap = new Map(status.map(s => [s.date, s.color]));
-  
-  return last30Days.map(date => ({
+  const statusMap = new Map(status.map((s) => [s.date, s.color]));
+
+  return last30Days.map((date) => ({
     date,
     color: statusMap.get(date) ?? -1, // -1 means no data
   }));
@@ -58,7 +60,8 @@ const GRPC: React.FC = () => {
         }));
         setNodes(nodesWithStatus.filter((node) => node.network === "mainnet"));
       } catch (err) {
-        const errorMsg = err instanceof Error ? err.message : "Failed to fetch GRPC nodes";
+        const errorMsg =
+          err instanceof Error ? err.message : "Failed to fetch GRPC nodes";
         setError(errorMsg);
       } finally {
         setLoading(false);
@@ -84,7 +87,9 @@ const GRPC: React.FC = () => {
         ) : error ? (
           <div className="flex justify-center items-center py-12">
             <div className="text-center">
-              <div className="text-red-500 text-lg font-semibold mb-2">Error loading nodes</div>
+              <div className="text-red-500 text-lg font-semibold mb-2">
+                Error loading nodes
+              </div>
               <p className="text-gray-600 dark:text-gray-400">{error}</p>
               <button
                 onClick={() => window.location.reload()}
@@ -103,33 +108,40 @@ const GRPC: React.FC = () => {
               >
                 <div className="flex w-full items-center gap-4">
                   <span className="w-[160px] text-sm text-gray-800 dark:text-gray-300 font-semibold truncate">
-                    {node.name}
+                    {node.name || node.address || "Unknown"} <br />
+                    {node.email && (
+                      <span className="text-gray-500 dark:text-gray-400 text-xs">
+                        {node.email}
+                      </span>
+                    )}
                   </span>
                   <div className="flex flex-1 gap-[1px]">
-                    {node.status?.map((stat: { color: number; date: string; }, i: number) => {
-                      const statusText =
-                        stat.color === 1 || stat.color === 2
-                          ? "Healthy"
-                          : stat.color === 0
-                          ? "Failed"
-                          : "No data";
-                      return (
-                        <div
-                          key={i}
-                          className={`group relative flex-1 h-[36px] rounded-xs ${getStatusColor(
-                            stat.color
-                          )} cursor-pointer transition-transform hover:scale-105`}
-                        >
-                          <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 bg-gray-900 dark:bg-gray-700 text-white text-xs rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-10 pointer-events-none">
-                            <div className="font-semibold">{stat.date}</div>
-                            <div className="text-gray-300">{statusText}</div>
-                            <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-px">
-                              <div className="border-4 border-transparent border-t-gray-900 dark:border-t-gray-700"></div>
+                    {node.status?.map(
+                      (stat: { color: number; date: string }, i: number) => {
+                        const statusText =
+                          stat.color === 1 || stat.color === 2
+                            ? "Healthy"
+                            : stat.color === 0
+                            ? "Failed"
+                            : "No data";
+                        return (
+                          <div
+                            key={i}
+                            className={`group relative flex-1 h-[36px] rounded-xs ${getStatusColor(
+                              stat.color
+                            )} cursor-pointer transition-transform hover:scale-105`}
+                          >
+                            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 bg-gray-900 dark:bg-gray-700 text-white text-xs rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-10 pointer-events-none">
+                              <div className="font-semibold">{stat.date}</div>
+                              <div className="text-gray-300">{statusText}</div>
+                              <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-px">
+                                <div className="border-4 border-transparent border-t-gray-900 dark:border-t-gray-700"></div>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      );
-                    })}
+                        );
+                      }
+                    )}
                   </div>
                 </div>
                 <div className="flex items-center justify-end gap-3 w-full sm:w-auto mt-2 sm:mt-0">
@@ -139,19 +151,25 @@ const GRPC: React.FC = () => {
                   <div className="flex items-center gap-1">
                     <div
                       className={`w-3 h-3 rounded-full shadow-md ${
-                        node.status?.some((s: { color: number; }) => s.color >= 0)
+                        node.status?.some(
+                          (s: { color: number }) => s.color >= 0
+                        )
                           ? "bg-green-500"
                           : "bg-gray-400"
                       }`}
                     />
                     <span
                       className={`text-sm font-medium ${
-                        node.status?.some((s: { color: number; }) => s.color >= 0)
+                        node.status?.some(
+                          (s: { color: number }) => s.color >= 0
+                        )
                           ? "text-green-600 dark:text-green-500"
                           : "text-gray-500 dark:text-gray-400"
                       }`}
                     >
-                      {node.status?.some((s: { color: number; }) => s.color >= 0) ? "Up" : "Pending"}
+                      {node.status?.some((s: { color: number }) => s.color >= 0)
+                        ? "Up"
+                        : "Pending"}
                     </span>
                   </div>
                 </div>
