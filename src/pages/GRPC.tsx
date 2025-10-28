@@ -60,8 +60,7 @@ const GRPC: React.FC = () => {
         }));
         setNodes(nodesWithStatus.filter((node) => node.network === "mainnet"));
       } catch (err) {
-        const errorMsg =
-          err instanceof Error ? err.message : "Failed to fetch GRPC nodes";
+        const errorMsg = err instanceof Error ? err.message : "Failed to fetch nodes";
         setError(errorMsg);
       } finally {
         setLoading(false);

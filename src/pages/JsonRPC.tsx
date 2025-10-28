@@ -51,14 +51,14 @@ const JsonRPC: React.FC = () => {
   useEffect(() => {
     const fetchNodes = async () => {
       try {
-        const data = await apiService.getGRPCNodes();
+        const data = await apiService.getJsonRPCNodes();
         const nodesWithStatus = data.map((node) => ({
           ...node,
           status: mapStatusToLast30Days(node.status || []),
         }));
         setNodes(nodesWithStatus.filter((node) => node.network === "mainnet"));
       } catch (err) {
-        const errorMsg = err instanceof Error ? err.message : "Failed to fetch GRPC nodes";
+        const errorMsg = err instanceof Error ? err.message : "Failed to fetch JSON-RPC nodes";
         setError(errorMsg);
       } finally {
         setLoading(false);
