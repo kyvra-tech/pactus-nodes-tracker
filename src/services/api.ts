@@ -237,8 +237,6 @@ class ApiService {
     return this.jsonRpcRequest<HealthResponse>('getHealth');
   }
 
-  // ========== LEGACY METHODS (Keep for peer nodes) ==========
-
   /**
    * Get peer nodes (still using REST)
    * TODO: Migrate to JSON-RPC if needed
@@ -246,6 +244,129 @@ class ApiService {
   async getPeerNodes(): Promise<PeerNode[]> {
     return this.request<PeerNode[]>(apiConfig.endpoints.peers);
   }
+
+  // ========== PHASE 2 METHODS ==========
+
+  /**
+   * Get all JSON-RPC nodes with their status
+   */
+  async getJSONRPCNodesFull(network?: string): Promise<JSONRPCNodeFull[]> {
+    return this.jsonRpcRequest<JSONRPCNodeFull[]>('getJSONRPCNodes', { network });
+  }
+
+  /**
+   * Get network statistics
+   */
+  async getNetworkStats(): Promise<NetworkStats> {
+    return this.jsonRpcRequest<NetworkStats>('getNetworkStats');
+  }
+
+  /**
+   * Get nodes formatted for map display
+   */
+  async getMapNodes(): Promise<MapNode[]> {
+    return this.jsonRpcRequest<MapNode[]>('getMapNodes');
+  }
+
+  /**
+   * Get network snapshots
+   */
+  async getSnapshots(limit?: number): Promise<Snapshot[]> {
+    return this.jsonRpcRequest<Snapshot[]>('getSnapshots', { limit: limit || 10 });
+  }
+
+  /**
+   * Register a new public node
+   */
+  async registerNode(request: RegistrationRequest): Promise<RegistrationResponse> {
+    return this.jsonRpcRequest<RegistrationResponse>('registerNode', request);
+  }
+
+  /**
+   * Get registration status
+   */
+  async getRegistrationStatus(id: number): Promise<NodeRegistration> {
+    return this.jsonRpcRequest<NodeRegistration>('getRegistrationStatus', { id });
+  }
+}
+
+// ========== PHASE 2 INTERFACES ==========
+
+export interface JSONRPCNodeFull {
+  id: number;
+  name: string;
+  address: string;
+  network: string;
+  email: string;
+  website: string;
+  country: string;
+  city: string;
+  latitude: number;
+  longitude: number;
+  status: DailyStatus[] | null;
+  overallScore: number;
+}
+
+export interface NetworkStats {
+  totalNodes: number;
+  reachableNodes: number;
+  countriesCount: number;
+  avgUptime: number;
+  topCountries: Array<{ country: string; countryCode: string; count: number }>;
+  grpcNodes: number;
+  jsonrpcNodes: number;
+  bootstrapNodes: number;
+}
+
+export interface MapNode {
+  id: number;
+  name: string;
+  type: 'bootstrap' | 'grpc' | 'jsonrpc' | 'peer';
+  coordinates: [number, number];
+  status: 'online' | 'offline' | 'unknown';
+  country: string;
+  city?: string;
+}
+
+export interface Snapshot {
+  id: number;
+  timestamp: string;
+  totalNodes: number;
+  reachableNodes: number;
+  countriesCount: number;
+  grpcNodes: number;
+  jsonrpcNodes: number;
+  bootstrapNodes: number;
+}
+
+export interface RegistrationRequest {
+  nodeType: 'grpc' | 'jsonrpc';
+  name: string;
+  address: string;
+  network: 'mainnet' | 'testnet';
+  email: string;
+  website?: string;
+}
+
+export interface RegistrationResponse {
+  id: number;
+  status: string;
+  message: string;
+}
+
+export interface NodeRegistration {
+  id: number;
+  nodeType: string;
+  name: string;
+  address: string;
+  network: string;
+  email: string;
+  website: string;
+  status: string;
+  rejectionReason?: string;
+  createdAt: string;
+  reviewedAt?: string;
+  reviewedBy?: string;
 }
 
 export const apiService = new ApiService();

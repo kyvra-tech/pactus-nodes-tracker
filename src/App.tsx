@@ -5,6 +5,7 @@ import PeerNodes from "./pages/PeerNodes";
 import BootstrapNodeHealth from "./pages/BootstrapNodeHealth";
 import GRPC from "./pages/GRPC";
 import JsonRPC from "./pages/JsonRPC";
+import NodeRegistration from "./pages/NodeRegistration";
 import { ErrorBoundary } from "./components/common/ErrorBoundary";
 
 const App: React.FC = () => {
@@ -17,6 +18,7 @@ const App: React.FC = () => {
             <Route path="bootstrap-node" element={<BootstrapNodeHealth />} />
             <Route path="grpc" element={<GRPC />} />
             <Route path="json-rpc" element={<JsonRPC />} />
+            <Route path="register" element={<NodeRegistration />} />
           </Route>
         </Routes>
       </Router>
