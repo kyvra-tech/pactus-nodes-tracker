@@ -268,32 +268,35 @@ const PeerNodesPage: React.FC = () => {
         {stats?.topCountries && stats.topCountries.length > 0 && (
           <div className="mt-8">
             <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">
-              Top Countries
+              Country Distribution
             </h3>
             <div className="bg-gray-100 dark:bg-gray-800 rounded-md border border-gray-300 dark:border-gray-700 p-4">
               <div className="space-y-3">
-                {stats.topCountries.slice(0, 5).map((country) => {
-                  const maxCount = stats.topCountries[0]?.count || 1;
-                  const barWidth = (country.count / maxCount) * 100;
-                  return (
-                    <div key={country.countryCode}>
-                      <div className="flex justify-between text-sm mb-1">
-                        <span className="text-gray-700 dark:text-gray-300">
-                          {getFlagEmoji(country.countryCode)} {country.country}
-                        </span>
-                        <span className="text-gray-600 dark:text-gray-400">
-                          {country.count}
-                        </span>
+                {stats.topCountries
+                  .slice()
+                  .sort((a, b) => b.count - a.count)
+                  .map((country, _, array) => {
+                    const maxCount = array[0]?.count || 1;
+                    const barWidth = (country.count / maxCount) * 100;
+                    return (
+                      <div key={country.countryCode}>
+                        <div className="flex justify-between text-sm mb-1">
+                          <span className="text-gray-700 dark:text-gray-300">
+                            {getFlagEmoji(country.countryCode)} {country.country}
+                          </span>
+                          <span className="text-gray-600 dark:text-gray-400">
+                            {country.count}
+                          </span>
+                        </div>
+                        <div className="h-2 bg-gray-200 dark:bg-gray-700 rounded-full">
+                          <div
+                            className="h-2 bg-blue-500 rounded-full transition-all duration-500"
+                            style={{ width: `${barWidth}%` }}
+                          />
+                        </div>
                       </div>
-                      <div className="h-2 bg-gray-200 dark:bg-gray-700 rounded-full">
-                        <div
-                          className="h-2 bg-blue-500 rounded-full transition-all duration-500"
-                          style={{ width: `${barWidth}%` }}
-                        />
-                      </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })}
               </div>
             </div>
           </div>
