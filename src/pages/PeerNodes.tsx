@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
@@ -171,23 +172,44 @@ const PeerNodesPage: React.FC = () => {
         )}
 
         {/* Map */}
-        <div className="rounded-md shadow-lg overflow-hidden border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800">
-          <MapContainer
-            center={[20, 0]}
-            zoom={2}
-            scrollWheelZoom={true}
-            style={{ height: "500px", width: "100%" }}
-          >
-            <TileLayer
-              attribution='&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a>'
-              url={tileLayerUrl}
-            />
+        <MapContainer
+          center={[20, 0]}
+          zoom={2}
+          scrollWheelZoom={true}
+          style={{ height: "500px", width: "100%" }}
+        >
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a>'
+            url={tileLayerUrl}
+          />
 
-            {mapNodes.map((node) => (
+          {mapNodes.map((node, index) => {
+            // Simple jittering for overlapping nodes
+            const overlapCount = mapNodes.filter((n, i) =>
+              i < index &&
+              n.coordinates[0] === node.coordinates[0] &&
+              n.coordinates[1] === node.coordinates[1]
+            ).length;
+
+            let position = node.coordinates;
+            if (overlapCount > 0) {
+              // Spiral out based on overlap count to avoid stacking
+              // Approx 0.5 degree offset for visibility at world scale
+              // Using golden angle 2.4 radians for nice distribution
+              const angle = overlapCount * 2.4;
+              const radius = 0.5 + (0.1 * overlapCount);
+              position = [
+                node.coordinates[0] + Math.sin(angle) * radius,
+                node.coordinates[1] + Math.cos(angle) * radius
+              ];
+            }
+
+            return (
               <Marker
-                key={`${node.type}-${node.id}`}
-                position={node.coordinates}
+                key={`${node.type}-${node.id}-${index}`}
+                position={position}
                 icon={createIcon(node.type, node.status)}
+                zIndexOffset={node.type === 'bootstrap' ? 100 : node.type === 'grpc' ? 200 : 300} // Bring user nodes to front
               >
                 <Popup>
                   <div className="text-sm">
@@ -211,9 +233,9 @@ const PeerNodesPage: React.FC = () => {
                   </div>
                 </Popup>
               </Marker>
-            ))}
-          </MapContainer>
-        </div>
+            );
+          })}
+        </MapContainer>
 
         {/* Legend */}
         <div className="mt-4 flex flex-wrap gap-4 justify-center">
